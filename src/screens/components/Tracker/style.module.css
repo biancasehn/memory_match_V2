@@ -1,0 +1,30 @@
+.board {
+    width: fit-content;
+    padding: 2em 2em;
+    background-color: #FFF;
+    border-radius: 0 10px 10px 0;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    
+    position: fixed;
+    animation: slideRight .5s ease;
+}
+
+.board p {
+    margin: 0;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-35px)
+    };
+    to {
+        transform: translateX(0px)
+    };
+}
+
+@media (max-width: 767px) {
+    .board{
+        bottom: 5px;
+        padding: 1em;
+    }
+}
