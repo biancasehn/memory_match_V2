@@ -6,7 +6,10 @@ export function Modal({ numberOfAttempts, setDisplayModal }) {
       <div className={style.modalWrap}>
         <h4>Well done!</h4>
         <h6>Number of failed attempts: {numberOfAttempts}</h6>
-        <button onClick={() => setDisplayModal(false)}>Play again</button>
+        <div className={style.button}>
+          <button className={style.resetButton} onClick={() => setDisplayModal(false)}>Play again</button>
+          <button className={style.closeButton} onClick={() => setDisplayModal(false)}>Close</button>
+        </div>
       </div>
     </div>
   );
