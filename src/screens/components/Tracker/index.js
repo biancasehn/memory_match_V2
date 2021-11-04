@@ -1,9 +1,9 @@
 import style from './style.module.css';
 
-export function Tracker() {
+export function Tracker({numberOfAttempts}) {
     return(
         <div className={style.board}>
-            <p>Number of attempts: 0</p>
+            <p>Number of failed attempts: {numberOfAttempts}</p>
         </div>
     )
 }

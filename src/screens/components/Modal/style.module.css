@@ -1,10 +1,9 @@
 .modalOpen {
-    
     position: fixed;
-    z-index: 999;
+    z-index: 3;
     top: 0;
 
-    display: none; /* change to flex */
+    display: flex;
     justify-content: center;
     align-items: center;
 
