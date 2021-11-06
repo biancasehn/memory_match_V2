@@ -1,0 +1,6 @@
+.resetButton {
+    border:none;
+    padding: .5em 1em;
+    border-radius: 10px;    
+    cursor: pointer;
+}

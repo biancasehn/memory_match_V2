@@ -1,14 +1,17 @@
+import useStore from '../../../store'
 import { useState, useEffect } from "react";
 
-import { CARDS } from "../../../constants/cards.js";
 import style from "./style.module.css";
 
-export function Board({
-  setDisplayModal,
-  numberOfAttempts,
-  setNumberOfAttempts,
-}) {
-  const [flippedCard, setFlippedCard] = useState(() => CARDS.map(() => false));
+export function Board() {
+  //UseStore
+  const setNumberOfAttempts = useStore(state => state.setNumberOfAttempts);
+  const { setDisplayModal } = useStore();
+  const cards = useStore((state) => state.cards)
+  const { setFlippedCard } = useStore();
+  const flippedCard = useStore(state => state.flippedCard)
+
+  //UseState
   const [comparisonArray, setComparisonArray] = useState([]);
   const [blockBoard, setBlockBoard] = useState(0);
 
@@ -18,29 +21,29 @@ export function Board({
       //comparisonArray length is 2? Time to compare the cards
       compareCards();
     }
-  }, [comparisonArray]);
+  }, [flippedCard]);
 
   const compareCards = () => {
-    if (comparisonArray[0] === comparisonArray[1]) {
-      //if the cards as not a match
-      filterMatches(); //if the cards flipped are match, go to filterMatches to check if all the cards have been matched
+    if (comparisonArray[0] === comparisonArray[1]) { //if the cards flipped are match, 
+      filterMatches(); //go to filterMatches to check if all the cards have been matched
       setComparisonArray([]); // Cleaning comparisonArray for the next round of comparison
-      setBlockBoard(0);
+      setBlockBoard(0); //The user can click again
       return;
     }
-    setNumberOfAttempts(++numberOfAttempts); // +1 failed attempt
+    //if the cards flipped are not a match:
+    setNumberOfAttempts(); // +1 failed attempt
     const backToFalse = Object.keys(flippedCard).map((key) => {
       //this function iterates through the flippedCard obj
       if (comparisonArray.includes(flippedCard[key])) {
         //looking for the cards not matched (comparisonArray)
-        return false; //if the card is found, it returns "false" to replace the animal
+        return false; //if the card is found, it returns "false" replacing the animal
       }
       return flippedCard[key];
     });
     setTimeout(() => {
-      //time for the user check the cards before flipping them back
+      //time for the user to check the cards before they are flipped back
       setFlippedCard(backToFalse);
-      setBlockBoard(0);
+      setBlockBoard(0); //The user can click again
     }, 1500);
     setComparisonArray([]); // Cleaning comparisonArray for the next round of comparison
   };
@@ -56,15 +59,15 @@ export function Board({
   return (
     <div className={style.container}>
       <div className={style.wrapper}>
-        {CARDS.map((card, i) => {
+        {cards.map((card, i) => {
           return (
             <div
               onClick={() => {
-                if (!flippedCard[i] && blockBoard < 2) {
-                  // the states change only if the card was not flipped yet
+                if (!flippedCard[i] && blockBoard < 2) { 
+                  // the states change only if the card was not flipped yet and the blockboard state is less than 2
                   setFlippedCard({ ...flippedCard, [i]: card }); //setting flippedCard state of the specific card to the respective animal
                   setComparisonArray([...comparisonArray, card]); // pushing the card to comparisonArray
-                  setBlockBoard((prev) => prev + 1);
+                  setBlockBoard((prev) => prev + 1); //The user is blocked from clicking when blockBoard === 2
                 }
               }}
               key={i}

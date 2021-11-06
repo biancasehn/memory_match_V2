@@ -1,28 +1,18 @@
-import { useState } from "react";
+import useStore from '../store'
 
 import { Header, Tracker, Board, Modal } from "./components";
 
 export function Home() {
-  const [displayModal, setDisplayModal] = useState(false);
-  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
-
+  const displayModal = useStore(state => state.displayModal)
   return (
     <div>
       <Header />
       {displayModal ? (
-        <Modal
-          displayModal={displayModal}
-          setDisplayModal={setDisplayModal}
-          numberOfAttempts={numberOfAttempts}
-        />
+        <Modal />
       ) : (
-        <Tracker numberOfAttempts={numberOfAttempts} />
+        <Tracker />
       )}
-      <Board
-        setDisplayModal={setDisplayModal}
-        numberOfAttempts={numberOfAttempts}
-        setNumberOfAttempts={setNumberOfAttempts}
-      />
+      <Board />
     </div>
   );
 }
