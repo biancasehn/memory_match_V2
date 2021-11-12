@@ -1,6 +1,6 @@
 import { ResetButton } from "../ResetButton";
 import style from "./style.module.css";
-import {useStore} from "../../services/store";
+import { useStore } from "services/store";
 
 export function Tracker() {
   const numberOfAttempts = useStore((state) => state.numberOfAttempts);

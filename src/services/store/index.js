@@ -1,6 +1,6 @@
 import createHook from "zustand";
 
-import { CARDS } from "../../constants/cards.js";
+import { CARDS } from "constants/cards.js";
 
 export const useStore = createHook((set) => ({
   cards: [...CARDS].sort(() => Math.random() - 0.5),

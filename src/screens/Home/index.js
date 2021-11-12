@@ -1,7 +1,7 @@
-import { Header, Tracker, Board, Modal } from "../../components";
-import {useStore} from "../../services/store";
+import { Header, Tracker, Board, Modal } from "components";
+import { useStore } from "services/store";
 
-export function Home() {
+export default () => {
   const { displayModal } = useStore()
   return (
     <div>
