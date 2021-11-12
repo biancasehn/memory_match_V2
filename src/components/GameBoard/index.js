@@ -1,27 +1,14 @@
-import useStore from '../../../store'
 import { useState, useEffect } from "react";
-
 import style from "./style.module.css";
+import {useStore} from "../../services/store";
 
 export function Board() {
   //UseStore
-  const setNumberOfAttempts = useStore(state => state.setNumberOfAttempts);
-  const { setDisplayModal } = useStore();
-  const cards = useStore((state) => state.cards)
-  const { setFlippedCard } = useStore();
-  const flippedCard = useStore(state => state.flippedCard)
+  const { setDisplayModal, setNumberOfAttempts, cards, setFlippedCard, flippedCard } = useStore();
 
   //UseState
   const [comparisonArray, setComparisonArray] = useState([]);
   const [blockBoard, setBlockBoard] = useState(0);
-
-  useEffect(() => {
-    //Everytime a card is clicked, comparisonArray receives it as an element, and this effect is triggered.
-    if (comparisonArray.length === 2) {
-      //comparisonArray length is 2? Time to compare the cards
-      compareCards();
-    }
-  }, [flippedCard]);
 
   const compareCards = () => {
     if (comparisonArray[0] === comparisonArray[1]) { //if the cards flipped are match, 
@@ -56,25 +43,33 @@ export function Board() {
     }).length === 0 && setDisplayModal(true); // All the cards have been matched? Display modal!
   };
 
+  useEffect(() => {
+    //Everytime a card is clicked, comparisonArray receives it as an element, and this effect is triggered.
+    if (comparisonArray.length === 2) {
+      //comparisonArray length is 2? Time to compare the cards
+      compareCards();
+    }
+  }, [flippedCard]);
+
   return (
     <div className={style.container}>
       <div className={style.wrapper}>
-        {cards.map((card, i) => {
+        {cards.map((card, index) => {
           return (
             <div
               onClick={() => {
-                if (!flippedCard[i] && blockBoard < 2) { 
+                if (!flippedCard[index] && blockBoard < 2) { 
                   // the states change only if the card was not flipped yet and the blockboard state is less than 2
-                  setFlippedCard({ ...flippedCard, [i]: card }); //setting flippedCard state of the specific card to the respective animal
+                  setFlippedCard({ ...flippedCard, [index]: card }); //setting flippedCard state of the specific card to the respective animal
                   setComparisonArray([...comparisonArray, card]); // pushing the card to comparisonArray
                   setBlockBoard((prev) => prev + 1); //The user is blocked from clicking when blockBoard === 2
                 }
               }}
-              key={i}
-              className={flippedCard[i] ? style.cardFlip : style.card}
-              id={i}
+              key={`card_${index}`}
+              className={flippedCard[index] ? style.cardFlip : style.card}
+              id={index}
             >
-              {flippedCard[i] ? (
+              {flippedCard[index] ? (
                 <div className={style.back}>{card}</div>
               ) : (
                 <div className={style.front}>?</div>

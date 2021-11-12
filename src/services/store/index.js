@@ -1,18 +1,16 @@
 import createHook from "zustand";
 
-import { CARDS } from "./constants/cards.js";
+import { CARDS } from "../../constants/cards.js";
 
-const useStore = createHook((set) => ({
+export const useStore = createHook((set) => ({
   cards: [...CARDS].sort(() => Math.random() - 0.5),
-
-  displayModal: false,
-  setDisplayModal: (displayModal) => set({ displayModal }),
-
   numberOfAttempts: 0,
+  displayModal: false,
+  flippedCard: CARDS.map(() => false),
+
+  setDisplayModal: (displayModal) => set({ displayModal }),
   setNumberOfAttempts: () =>
     set((state) => ({ numberOfAttempts: state.numberOfAttempts + 1 })),
-
-  flippedCard: CARDS.map(() => false),
   setFlippedCard: (flippedCard) => set({ flippedCard }),
 
   resetGame: () =>
@@ -23,5 +21,3 @@ const useStore = createHook((set) => ({
       flippedCard: CARDS.map((card) => false),
     })),
 }));
-
-export default useStore;

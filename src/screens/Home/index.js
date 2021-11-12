@@ -1,9 +1,8 @@
-import useStore from '../store'
-
-import { Header, Tracker, Board, Modal } from "./components";
+import { Header, Tracker, Board, Modal } from "../../components";
+import {useStore} from "../../services/store";
 
 export function Home() {
-  const displayModal = useStore(state => state.displayModal)
+  const { displayModal } = useStore()
   return (
     <div>
       <Header />

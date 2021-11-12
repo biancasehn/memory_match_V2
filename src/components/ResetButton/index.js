@@ -1,5 +1,5 @@
-import useStore from "../../../store";
 import style from "./style.module.css";
+import {useStore} from "../../services/store";
 
 export function ResetButton({ content, background, boxShadow }) {
   const resetGame = useStore((state) => state.resetGame);
